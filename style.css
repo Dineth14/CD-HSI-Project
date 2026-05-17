@@ -1,0 +1,213 @@
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Base */
+html, body { height: 100%; }
+body {
+  font: 15px/1.75 Georgia, "Times New Roman", serif;
+  color: #1A1A1A;
+  background: #F8F6F1;
+}
+
+/* Shell */
+#shell { max-width: 1020px; margin: 0 auto; background: #F8F6F1; }
+
+/* Header */
+#header {
+  padding: 16px 24px;
+  border-bottom: 2px solid #1B3A6B;
+  background: #F8F6F1;
+  overflow: hidden;
+}
+#header .site-name {
+  float: left;
+  font: 15px Georgia, serif;
+  color: #0D0D0D;
+  text-decoration: none;
+}
+#header .site-uni {
+  float: right;
+  font: 11px "Courier New", monospace;
+  color: #5A5A5A;
+  line-height: 2.4;
+}
+
+/* Body row */
+#body-row { overflow: hidden; }
+
+/* Sidebar */
+#sidebar {
+  float: left;
+  width: 210px;
+  min-height: 100vh;
+  background: #EDEAE3;
+  border-right: 1px solid #C8C4BB;
+  padding: 24px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+#sidebar a {
+  display: block;
+  padding: 5px 18px;
+  font: 12px "Courier New", monospace;
+  color: #1A1A1A;
+  text-decoration: none;
+}
+#sidebar a:hover { background: #D8D4CC; }
+#sidebar a.current { font-weight: bold; background: #E0DCD3; }
+#sidebar .sb-home {
+  font: 14px Georgia, serif;
+  color: #1B3A6B;
+  padding: 6px 18px;
+  display: block;
+  text-decoration: none;
+}
+#sidebar .sb-home:hover { background: #D8D4CC; }
+#sidebar .sb-home.current { font-weight: bold; background: #E0DCD3; }
+.sb-rule {
+  border: none;
+  border-top: 1px solid #C8C4BB;
+  margin: 12px 16px;
+}
+.sb-label {
+  display: block;
+  padding: 4px 18px;
+  font: 10px "Courier New", monospace;
+  color: #888;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Status squares in sidebar */
+.sq {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.sq-done { background: #2A6A3A; }
+.sq-active { background: #A05C00; }
+.sq-proposed { background: transparent; border: 1px solid #AAAAAA; }
+
+/* Content area */
+#content { margin-left: 210px; padding: 36px 44px; min-height: 100vh; }
+
+/* Headings */
+h1 {
+  font: normal 20px Georgia, serif;
+  color: #0D0D0D;
+  margin-bottom: 10px;
+}
+h2 {
+  font: normal 16px Georgia, serif;
+  color: #0D0D0D;
+  border-bottom: 1px solid #D4D0C8;
+  padding-bottom: 5px;
+  margin: 36px 0 14px;
+}
+h3 {
+  font: bold 14px Georgia, serif;
+  color: #1A1A1A;
+  margin: 22px 0 8px;
+}
+
+/* Paragraphs, lists */
+p { margin-bottom: 1em; }
+ul, ol { padding-left: 1.4em; margin: 8px 0 16px; }
+li { margin-bottom: 4px; font-size: 14px; }
+
+/* Links */
+a { color: #1B3A6B; }
+a:visited { color: #5B2D8E; }
+
+/* Tables - general */
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th {
+  background: #E2DED6;
+  font: bold 13px "Courier New", monospace;
+  color: #333;
+  border: 1px solid #C8C4BB;
+  padding: 8px 12px;
+  text-align: left;
+}
+td {
+  border: 1px solid #C8C4BB;
+  padding: 8px 12px;
+  vertical-align: top;
+  font-size: 14px;
+}
+tr:nth-child(even) td { background: #F2F0EB; }
+
+/* Info table on home (no outer border, no striping) */
+.info-table { margin-top: 14px; }
+.info-table td {
+  border: none;
+  border-bottom: 1px solid #E4E0D8;
+  padding: 5px 10px 5px 0;
+  font-size: 14px;
+}
+.info-table td:first-child {
+  font: 12px "Courier New", monospace;
+  color: #5A5A5A;
+  width: 130px;
+  white-space: nowrap;
+}
+
+/* Figures */
+figure { margin: 18px 0; }
+.fig-empty {
+  border: 1px dashed #C8C4BB;
+  background: #F2F0EB;
+  padding: 44px 20px;
+  text-align: center;
+  font: 13px "Courier New", monospace;
+  color: #999;
+}
+figcaption {
+  font: italic 13px Georgia, serif;
+  text-align: center;
+  margin-top: 6px;
+  color: #5A5A5A;
+}
+
+/* Status spans */
+.s-done { font: 12px "Courier New", monospace; color: #2A6A3A; }
+.s-active { font: bold 12px "Courier New", monospace; color: #A05C00; }
+.s-proposed { font: 12px "Courier New", monospace; color: #888888; }
+
+/* Placeholder text */
+.ph { color: #999999; font-style: italic; }
+
+/* Meta line and nav strip on week pages */
+.meta-line {
+  font: 12px "Courier New", monospace;
+  color: #5A5A5A;
+  margin-bottom: 6px;
+}
+.week-nav {
+  font: 12px "Courier New", monospace;
+  color: #888;
+  margin: 8px 0 4px;
+}
+.week-nav a { color: #1B3A6B; }
+
+/* Dividers */
+.section-rule {
+  border: none;
+  border-top: 1px solid #D4D0C8;
+  margin: 28px 0;
+}
+
+/* Footer */
+#footer {
+  clear: both;
+  border-top: 1px solid #D4D0C8;
+  padding: 14px 24px;
+  text-align: center;
+  font: 11px "Courier New", monospace;
+  color: #888;
+  line-height: 2.2;
+}

@@ -245,12 +245,12 @@ Change to:
 
 ## 8. Deploying to GitHub Pages
 
-1. Push the project to a public GitHub repository.
-2. Open the repository on GitHub.
-3. Go to Settings → Pages.
-4. Choose Deploy from branch.
-5. Choose `main`.
-6. Choose `/ (root)`.
+1. Push the project to GitHub.
+2. Open the repository on GitHub and go to Settings → Pages.
+3. Under Build and deployment, choose GitHub Actions as the source.
+4. Keep the workflow file at `.github/workflows/deploy.yml`.
+5. Every push to `main` will publish the site automatically.
+6. You can also run the workflow manually from the Actions tab.
 7. The site URL will be `https://username.github.io/repo-name/`.
 
 ## 9. What never to touch

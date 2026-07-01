@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="../style.css">
   <script src="../nav.js" defer></script>
 </head>
+
 <body>
   <div id="shell">
     <div id="header">
@@ -29,11 +31,11 @@
         <a href="week02.html"><span class="sq sq-done"></span>W02&nbsp; Dataset Study</a>
         <a href="week03.html"><span class="sq sq-done"></span>W03&nbsp; Benchmark Design</a>
         <a href="week04.html"><span class="sq sq-done"></span>W04&nbsp; Implementation</a>
-        <a href="week05.html"><span class="sq sq-active"></span>W05&nbsp; SSM Benchmarking</a>
-        <a href="week06.html"><span class="sq sq-proposed"></span>W06&nbsp; Boundary Analysis</a>
-        <a href="week07.html"><span class="sq sq-proposed"></span>W07&nbsp; Annotation I</a>
-        <a href="week08.html"><span class="sq sq-proposed"></span>W08&nbsp; Mid-Review</a>
-        <a href="week09.html"><span class="sq sq-proposed"></span>W09&nbsp; CD Model Design</a>
+        <a href="week05.html"><span class="sq sq-done"></span>W05&nbsp; SSM Benchmarking</a>
+        <a href="week06.html"><span class="sq sq-done"></span>W06&nbsp; Boundary Analysis</a>
+        <a href="week07.html"><span class="sq sq-done"></span>W07&nbsp; Annotation I</a>
+        <a href="week08.html"><span class="sq sq-done"></span>W08&nbsp; Mid-Review</a>
+        <a href="week09.html"><span class="sq sq-active"></span>W09&nbsp; CD Model Design</a>
         <a href="week10.html"><span class="sq sq-proposed"></span>W10&nbsp; Refinement Module</a>
         <a href="week11.html"><span class="sq sq-proposed"></span>W11&nbsp; Decoder &amp; Loss</a>
         <a href="week12.html"><span class="sq sq-proposed"></span>W12&nbsp; Training</a>
@@ -47,32 +49,145 @@
 
       <div id="content">
         <h1>Week 7 — Disaster Dataset Annotation Phase I</h1>
-        <div class="meta-line">Status: <span class="s-proposed">Proposed</span></div>
-        <div class="week-nav">← <a href="week06.html">Week 6</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week08.html">Week 8</a> →</div>
+        <div class="meta-line">Status: <span class="s-done">Completed</span> · Dates: 07/06/2026 – 13/06/2026</div>
+        <div class="week-nav">← <a href="week06.html">Week 6</a> &nbsp;·&nbsp; <a href="../index.html">Home</a>
+          &nbsp;·&nbsp; <a href="week08.html">Week 8</a> →</div>
 
         <hr class="section-rule">
 
-        <h2>Proposed Work</h2>
-        <p>This week has not started yet. The following outlines what is planned based on the project schedule.</p>
-        <!-- Edit these proposed tasks when planning for this week changes. -->
+        <h2>Planned Work</h2>
         <ul>
-          <li><span class="ph">[Proposed task for this week]</span></li>
-          <li><span class="ph">[Proposed task for this week]</span></li>
-          <li><span class="ph">[Proposed task for this week]</span></li>
+          <li>Initiation of Disaster Dataset Annotation Phase I.</li>
+          <li>Selection and preprocessing of bi-temporal satellite images for annotations.</li>
+          <li>Production of binary change maps/masks for selected change scenes.</li>
         </ul>
-        <!--
-          When this week begins, replace this entire page with the
-          full progress template (Blocks 1-7). See HOWTO.md for instructions.
-        -->
-        <div class="week-nav">← <a href="week06.html">Week 6</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week08.html">Week 8</a> →</div>
+
+        <h2>Findings</h2>
+        <h3>Observations</h3>
+        <ul>
+          <li>We selected 5 representative bi-temporal remote sensing scenes containing significant land-use and
+            infrastructure changes.</li>
+          <li>High-quality binary change masks were manually annotated to distinguish real changes (e.g., new buildings,
+            roads, land conversions) from seasonal/illumination variations.</li>
+          <li>These annotations will serve as ground truth masks for training and evaluating our change detection
+            models.</li>
+        </ul>
+
+        <h3>Decisions</h3>
+        <ul>
+          <li>Utilize these annotated masks to train the proposed Region-Boundary Refinement Module.</li>
+          <li>Proceed to annotation quality check and verification during next week's review.</li>
+        </ul>
+
+        <h2>Figures</h2>
+        <p>Below are the bi-temporal satellite images (Before and After) along with their corresponding manually
+          annotated binary change masks for the 5 selected scenes.</p>
+
+        <div class="scene-container">
+          <h3>Scene 1</h3>
+          <div class="image-row">
+            <div class="image-col">
+              <img src="../assets/week7/before/00001.png" alt="Scene 1 - Before">
+              <div class="image-label">Before</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/after/00001.png" alt="Scene 1 - After">
+              <div class="image-label">After</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/masks/00001.png" alt="Scene 1 - Mask">
+              <div class="image-label">Mask</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-container">
+          <h3>Scene 2</h3>
+          <div class="image-row">
+            <div class="image-col">
+              <img src="../assets/week7/before/00002.png" alt="Scene 2 - Before">
+              <div class="image-label">Before</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/after/00002.png" alt="Scene 2 - After">
+              <div class="image-label">After</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/masks/00002.png" alt="Scene 2 - Mask">
+              <div class="image-label">Mask</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-container">
+          <h3>Scene 3</h3>
+          <div class="image-row">
+            <div class="image-col">
+              <img src="../assets/week7/before/00003.png" alt="Scene 3 - Before">
+              <div class="image-label">Before</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/after/00003.png" alt="Scene 3 - After">
+              <div class="image-label">After</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/masks/00003.png" alt="Scene 3 - Mask">
+              <div class="image-label">Mask</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-container">
+          <h3>Scene 4</h3>
+          <div class="image-row">
+            <div class="image-col">
+              <img src="../assets/week7/before/00004.png" alt="Scene 4 - Before">
+              <div class="image-label">Before</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/after/00004.png" alt="Scene 4 - After">
+              <div class="image-label">After</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/masks/00004.png" alt="Scene 4 - Mask">
+              <div class="image-label">Mask</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene-container">
+          <h3>Scene 5</h3>
+          <div class="image-row">
+            <div class="image-col">
+              <img src="../assets/week7/before/00005.png" alt="Scene 5 - Before">
+              <div class="image-label">Before</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/after/00005.png" alt="Scene 5 - After">
+              <div class="image-label">After</div>
+            </div>
+            <div class="image-col">
+              <img src="../assets/week7/masks/00005.png" alt="Scene 5 - Mask">
+              <div class="image-label">Mask</div>
+            </div>
+          </div>
+        </div>
+
+        <h2>Next Week</h2>
+        <p style="font:12px 'Courier New', Courier, monospace;">Week 8 — Mid-Review</p>
+        <p>Mid-project presentation and evaluation of dataset annotation quality.</p>
+
+        <div class="week-nav">← <a href="week06.html">Week 6</a> &nbsp;·&nbsp; <a href="../index.html">Home</a>
+          &nbsp;·&nbsp; <a href="week08.html">Week 8</a> →</div>
       </div>
     </div>
 
     <div id="footer">
       Change Detection Using Satellite Images for Remote Sensing<br>
       E/21/139 · E/21/291 · E/21/345 · University of Peradeniya<br>
-      Last updated: [DATE]
+      Last updated: 01/07/2026
     </div>
   </div>
 </body>
+
 </html>

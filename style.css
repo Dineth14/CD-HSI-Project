@@ -328,6 +328,41 @@ figcaption {
   line-height: 1.4;
 }
 
+/* Image Grid / Parallel Layout for Figures */
+.image-row {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0 24px;
+}
+
+.image-col {
+  flex: 1;
+  text-align: center;
+}
+
+.image-col img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #C8C4BB;
+  display: block;
+}
+
+.image-label {
+  font: italic 12px Georgia, serif;
+  margin-top: 6px;
+  color: #5A5A5A;
+}
+
+.scene-container {
+  margin-bottom: 24px;
+}
+
+.scene-container h3 {
+  margin: 16px 0 8px;
+  font: bold 13px "Courier New", monospace;
+  color: #333;
+}
+
 /* ── Tablet and Mobile: sidebar off-canvas ── */
 @media (max-width: 899px) {
 
@@ -403,6 +438,11 @@ figcaption {
   #footer {
     font-size: 10px;
     padding: 12px 16px;
+  }
+
+  .image-row {
+    flex-direction: column;
+    gap: 16px;
   }
 
 }

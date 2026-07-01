@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="../style.css">
   <script src="../nav.js" defer></script>
 </head>
+
 <body>
   <div id="shell">
     <div id="header">
@@ -47,45 +49,432 @@
 
       <div id="content">
         <h1>Week 6 — Boundary and Domain-Shift Analysis</h1>
-        <div class="meta-line">Status: <span class="s-active">In progress</span> · Dates: <span class="ph"> 31/05/2026 – 06/06/2026 </span></div>
-        <div class="week-nav">← <a href="week05.html">Week 5</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week07.html">Week 7</a> →</div>
+        <div class="meta-line">Status: <span class="s-done">Completed</span> · Dates: 31/05/2026 – 06/06/2026</div>
+        <div class="week-nav">← <a href="week05.html">Week 5</a> &nbsp;·&nbsp; <a href="../index.html">Home</a>
+          &nbsp;·&nbsp; <a href="week07.html">Week 7</a> →</div>
 
         <hr class="section-rule">
 
         <h2>Planned Work</h2>
-      
+
         <ul>
-          <li><span class="ph">Analysis of boundary detection performance of implemented models.</span></li>
-          <li><span class="ph">Investigation of domain-shift effects on model performance.</span></li>
-          <li><span class="ph">Comparison of boundary detection metrics across different datasets.</span></li>
+          <li>Analysis of boundary detection performance of implemented models.</li>
+          <li>Investigation of domain-shift effects on model performance.</li>
+          <li>Comparison of boundary detection metrics across different datasets.</li>
         </ul>
-        
+
         <h2>Findings</h2>
         <h3>Observations</h3>
         <ul>
-          <li><span class="ph">We calculated boundary miou for each model and compared it with the interior miou of the same model.</span></li>
-          <li><span class="ph">Domain-shift effects were observed, indicating that models trained on one dataset may not generalize well to another.</span></li>
+          <li>We performed controlled benchmarking on both LoveDA and ISPRS Potsdam datasets, evaluating CNN,
+            Transformer, and State-Space Models (SSMs). The complete cross-domain and source-only results are detailed
+            in Table I.</li>
+          <li>We conducted a boundary and interior diagnostic analysis on LoveDA (Table IV). A significant drop in
+            performance is observed at boundary regions (&Delta;) compared to interior regions across all models,
+            highlighting boundary detection as a primary bottleneck.</li>
+          <li>Domain-shift effects are pronounced in cross-domain evaluations (U&rarr;R and R&rarr;U), indicating
+            limited generalization without targeted domain adaptation.</li>
         </ul>
+
+        <div class="table-container">
+          <div class="academic-table-caption">Table I</div>
+          <div class="academic-table-title">
+            Controlled benchmark results on LoveDA and ISPRS Potsdam. U&rarr;R and R&rarr;U denote source-only
+            cross-domain mIoU. Top-3 per column: <span class="rank-1">1st</span>, <span class="rank-2">2nd</span>, <span
+              class="rank-3">3rd</span>.
+          </div>
+          <table class="academic-table">
+            <thead>
+              <tr class="top-rule">
+                <th rowspan="2" class="text-left" style="width: 10%;">Type</th>
+                <th rowspan="2" class="text-left" style="width: 15%;">Backbone</th>
+                <th rowspan="2" class="text-right" style="width: 7%;">Params<br>(M)</th>
+                <th rowspan="2" class="text-right" style="width: 7%;">FLOPs<br>(G)</th>
+                <th rowspan="2" class="text-right" style="width: 7%;">Mem<br>(GB)</th>
+                <th rowspan="2" class="text-right" style="width: 7%;">FPS<br>(img/s)</th>
+                <th colspan="5" class="col-header-group text-center">LoveDA</th>
+                <th colspan="3" class="col-header-group text-center">Potsdam</th>
+              </tr>
+              <tr class="mid-rule">
+                <!-- Spanned headers for LoveDA -->
+                <th class="text-right">mIoU</th>
+                <th class="text-right">OA</th>
+                <th class="text-right">F1</th>
+                <th class="text-right">U&rarr;R</th>
+                <th class="text-right">R&rarr;U</th>
+                <!-- Spanned headers for Potsdam -->
+                <th class="text-right">mIoU</th>
+                <th class="text-right">OA</th>
+                <th class="text-right">F1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left">CNN</td>
+                <td class="text-left">DeepLabv3</td>
+                <td class="text-right num-val">36.0</td>
+                <td class="text-right num-val">105.3</td>
+                <td class="text-right num-val">0.40</td>
+                <td class="text-right num-val">18.52</td>
+                <td class="text-right num-val">43.01</td>
+                <td class="text-right num-val">59.14</td>
+                <td class="text-right num-val">64.20</td>
+                <td class="text-right num-val">30.36</td>
+                <td class="text-right num-val">39.98</td>
+                <td class="text-right num-val">75.09</td>
+                <td class="text-right num-val">89.06</td>
+                <td class="text-right num-val">84.44</td>
+              </tr>
+              <tr class="group-sep">
+                <td class="text-left">Transformer</td>
+                <td class="text-left">UNetFormer</td>
+                <td class="text-right num-val">16.2</td>
+                <td class="text-right num-val">48.9</td>
+                <td class="text-right num-val">0.18</td>
+                <td class="text-right num-val">40.60</td>
+                <td class="text-right num-val">48.61</td>
+                <td class="text-right num-val">65.04</td>
+                <td class="text-right num-val">63.99</td>
+                <td class="text-right num-val">34.56</td>
+                <td class="text-right num-val">44.84</td>
+                <td class="text-right num-val">74.99</td>
+                <td class="text-right num-val">89.12</td>
+                <td class="text-right num-val">84.46</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">VMamba-Tiny</td>
+                <td class="text-right num-val">27.6</td>
+                <td class="text-right num-val">26.1</td>
+                <td class="text-right num-val">0.41</td>
+                <td class="text-right num-val">18.44</td>
+                <td class="text-right num-val">55.19</td>
+                <td class="text-right num-val">72.15</td>
+                <td class="text-right num-val">70.30</td>
+                <td class="text-right num-val">35.42</td>
+                <td class="text-right num-val">53.19</td>
+                <td class="text-right num-val">77.06</td>
+                <td class="text-right num-val">90.16</td>
+                <td class="text-right num-val rank-3">86.06</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">VMamba-Small</td>
+                <td class="text-right num-val">49.1</td>
+                <td class="text-right num-val">42.5</td>
+                <td class="text-right num-val">0.49</td>
+                <td class="text-right num-val">10.50</td>
+                <td class="text-right num-val rank-1">55.66</td>
+                <td class="text-right num-val rank-1">73.49</td>
+                <td class="text-right num-val rank-1">70.69</td>
+                <td class="text-right num-val rank-2">40.62</td>
+                <td class="text-right num-val">53.52</td>
+                <td class="text-right num-val rank-1">77.59</td>
+                <td class="text-right num-val rank-2">90.43</td>
+                <td class="text-right num-val rank-1">86.46</td>
+              </tr>
+              <tr class="group-sep">
+                <td class="text-left">SSM</td>
+                <td class="text-left">VMamba-Base</td>
+                <td class="text-right num-val">81.7</td>
+                <td class="text-right num-val">67.3</td>
+                <td class="text-right num-val">0.70</td>
+                <td class="text-right num-val">7.77</td>
+                <td class="text-right num-val rank-2">55.61</td>
+                <td class="text-right num-val rank-2">72.89</td>
+                <td class="text-right num-val rank-2">70.54</td>
+                <td class="text-right num-val">35.82</td>
+                <td class="text-right num-val rank-1">55.50</td>
+                <td class="text-right num-val rank-2">77.43</td>
+                <td class="text-right num-val rank-1">90.61</td>
+                <td class="text-right num-val rank-2">86.19</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">MambaVision-T</td>
+                <td class="text-right num-val">36.8</td>
+                <td class="text-right num-val">44.9</td>
+                <td class="text-right num-val">0.19</td>
+                <td class="text-right num-val">40.83</td>
+                <td class="text-right num-val">54.39</td>
+                <td class="text-right num-val">71.00</td>
+                <td class="text-right num-val">69.88</td>
+                <td class="text-right num-val">38.12</td>
+                <td class="text-right num-val">53.89</td>
+                <td class="text-right num-val">76.59</td>
+                <td class="text-right num-val">90.01</td>
+                <td class="text-right num-val">85.65</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">MambaVision-T2</td>
+                <td class="text-right num-val">40.1</td>
+                <td class="text-right num-val">50.7</td>
+                <td class="text-right num-val">0.21</td>
+                <td class="text-right num-val">34.87</td>
+                <td class="text-right num-val">54.93</td>
+                <td class="text-right num-val">72.24</td>
+                <td class="text-right num-val">69.97</td>
+                <td class="text-right num-val">38.17</td>
+                <td class="text-right num-val">51.02</td>
+                <td class="text-right num-val">76.65</td>
+                <td class="text-right num-val">90.00</td>
+                <td class="text-right num-val">85.72</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">MambaVision-S</td>
+                <td class="text-right num-val">55.6</td>
+                <td class="text-right num-val">65.6</td>
+                <td class="text-right num-val">0.27</td>
+                <td class="text-right num-val">30.19</td>
+                <td class="text-right num-val">53.71</td>
+                <td class="text-right num-val">71.19</td>
+                <td class="text-right num-val">69.07</td>
+                <td class="text-right num-val">39.47</td>
+                <td class="text-right num-val">53.46</td>
+                <td class="text-right num-val">76.77</td>
+                <td class="text-right num-val">90.13</td>
+                <td class="text-right num-val">85.77</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">MambaVision-B</td>
+                <td class="text-right num-val">104.2</td>
+                <td class="text-right num-val">123.8</td>
+                <td class="text-right num-val">0.45</td>
+                <td class="text-right num-val">17.72</td>
+                <td class="text-right num-val">55.17</td>
+                <td class="text-right num-val">72.42</td>
+                <td class="text-right num-val rank-3">70.43</td>
+                <td class="text-right num-val rank-3">40.24</td>
+                <td class="text-right num-val">51.96</td>
+                <td class="text-right num-val rank-3">77.08</td>
+                <td class="text-right num-val">90.27</td>
+                <td class="text-right num-val">86.03</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">MambaVision-L</td>
+                <td class="text-right num-val">236.6</td>
+                <td class="text-right num-val">273.6</td>
+                <td class="text-right num-val">0.97</td>
+                <td class="text-right num-val">8.64</td>
+                <td class="text-right num-val rank-3">55.25</td>
+                <td class="text-right num-val rank-3">72.79</td>
+                <td class="text-right num-val">70.39</td>
+                <td class="text-right num-val">38.53</td>
+                <td class="text-right num-val rank-3">54.01</td>
+                <td class="text-right num-val">77.07</td>
+                <td class="text-right num-val rank-3">90.30</td>
+                <td class="text-right num-val">85.98</td>
+              </tr>
+              <tr class="group-sep">
+                <td class="text-left">SSM</td>
+                <td class="text-left">MambaVision-L2</td>
+                <td class="text-right num-val">250.2</td>
+                <td class="text-right num-val">297.5</td>
+                <td class="text-right num-val">1.03</td>
+                <td class="text-right num-val">7.83</td>
+                <td class="text-right num-val">54.97</td>
+                <td class="text-right num-val">71.54</td>
+                <td class="text-right num-val">70.17</td>
+                <td class="text-right num-val rank-1">41.74</td>
+                <td class="text-right num-val rank-2">54.62</td>
+                <td class="text-right num-val">76.89</td>
+                <td class="text-right num-val">90.18</td>
+                <td class="text-right num-val">85.85</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">Spatial-Mamba-T</td>
+                <td class="text-right num-val">30.7</td>
+                <td class="text-right num-val">33.3</td>
+                <td class="text-right num-val">0.21</td>
+                <td class="text-right num-val">25.76</td>
+                <td class="text-right num-val">45.56</td>
+                <td class="text-right num-val">65.31</td>
+                <td class="text-right num-val">61.85</td>
+                <td class="text-right num-val">33.10</td>
+                <td class="text-right num-val">45.30</td>
+                <td class="text-right num-val">68.23</td>
+                <td class="text-right num-val">84.78</td>
+                <td class="text-right num-val">79.46</td>
+              </tr>
+              <tr>
+                <td class="text-left">SSM</td>
+                <td class="text-left">Spatial-Mamba-S</td>
+                <td class="text-right num-val">47.1</td>
+                <td class="text-right num-val">46.7</td>
+                <td class="text-right num-val">0.27</td>
+                <td class="text-right num-val">17.64</td>
+                <td class="text-right num-val">46.54</td>
+                <td class="text-right num-val">65.57</td>
+                <td class="text-right num-val">62.88</td>
+                <td class="text-right num-val">29.72</td>
+                <td class="text-right num-val">43.71</td>
+                <td class="text-right num-val">69.21</td>
+                <td class="text-right num-val">85.48</td>
+                <td class="text-right num-val">80.18</td>
+              </tr>
+              <tr class="bottom-rule">
+                <td class="text-left">SSM</td>
+                <td class="text-left">Spatial-Mamba-B</td>
+                <td class="text-right num-val">100.5</td>
+                <td class="text-right num-val">92.3</td>
+                <td class="text-right num-val">0.52</td>
+                <td class="text-right num-val">10.97</td>
+                <td class="text-right num-val">48.03</td>
+                <td class="text-right num-val">66.35</td>
+                <td class="text-right num-val">64.19</td>
+                <td class="text-right num-val">35.23</td>
+                <td class="text-right num-val">46.55</td>
+                <td class="text-right num-val">70.00</td>
+                <td class="text-right num-val">85.92</td>
+                <td class="text-right num-val">80.81</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="academic-table-note">
+            Note: FPS measured at 512&times;512, batch size 4, FP32 (AMP off), 300 iterations with 50 warmup iterations.
+          </div>
+        </div>
+
+        <div class="table-container">
+          <div class="academic-table-caption">Table II</div>
+          <div class="academic-table-title">
+            Diagnostic analysis on LoveDA. Boundary/Interior mIoU use &tau; = 2 pixel dilation (see Section IV-A). Class
+            groups: Structural = {Building, Road}, Natural = {Forest, Agriculture, Water}.
+          </div>
+          <table class="academic-table">
+            <thead>
+              <tr class="top-rule mid-rule">
+                <th class="text-left border-right" style="width: 20%;">Backbone</th>
+                <th class="text-right">Boundary</th>
+                <th class="text-right">Interior</th>
+                <th class="text-right border-right">&Delta;</th>
+                <th class="text-right">R&rarr;U Struct</th>
+                <th class="text-right">R&rarr;U Nat</th>
+                <th class="text-right">U&rarr;R Struct</th>
+                <th class="text-right">U&rarr;R Nat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left border-right">VMamba-Tiny</td>
+                <td class="text-right num-val">29.0</td>
+                <td class="text-right num-val">58.5</td>
+                <td class="text-right num-val border-right">29.5</td>
+                <td class="text-right num-val">55.9</td>
+                <td class="text-right num-val">57.7</td>
+                <td class="text-right num-val">41.4</td>
+                <td class="text-right num-val">34.2</td>
+              </tr>
+              <tr>
+                <td class="text-left border-right">VMamba-Small</td>
+                <td class="text-right num-val">28.2</td>
+                <td class="text-right num-val">59.1</td>
+                <td class="text-right num-val border-right">30.8</td>
+                <td class="text-right num-val">56.0</td>
+                <td class="text-right num-val">58.2</td>
+                <td class="text-right num-val">42.3</td>
+                <td class="text-right num-val">46.2</td>
+              </tr>
+              <tr class="group-sep">
+                <td class="text-left border-right">VMamba-Base</td>
+                <td class="text-right num-val">29.4</td>
+                <td class="text-right num-val">58.9</td>
+                <td class="text-right num-val border-right">29.5</td>
+                <td class="text-right num-val">58.1</td>
+                <td class="text-right num-val">63.0</td>
+                <td class="text-right num-val">46.4</td>
+                <td class="text-right num-val">40.9</td>
+              </tr>
+              <tr>
+                <td class="text-left border-right">MambaVision-T</td>
+                <td class="text-right num-val">29.5</td>
+                <td class="text-right num-val">57.6</td>
+                <td class="text-right num-val border-right">28.0</td>
+                <td class="text-right num-val">56.8</td>
+                <td class="text-right num-val">55.0</td>
+                <td class="text-right num-val">39.3</td>
+                <td class="text-right num-val">41.1</td>
+              </tr>
+              <tr>
+                <td class="text-left border-right">MambaVision-S</td>
+                <td class="text-right num-val">27.0</td>
+                <td class="text-right num-val">57.0</td>
+                <td class="text-right num-val border-right">30.0</td>
+                <td class="text-right num-val">55.7</td>
+                <td class="text-right num-val">60.5</td>
+                <td class="text-right num-val">39.2</td>
+                <td class="text-right num-val">47.1</td>
+              </tr>
+              <tr class="group-sep">
+                <td class="text-left border-right">MambaVision-B</td>
+                <td class="text-right num-val">29.0</td>
+                <td class="text-right num-val">58.4</td>
+                <td class="text-right num-val border-right">29.4</td>
+                <td class="text-right num-val">57.0</td>
+                <td class="text-right num-val">54.9</td>
+                <td class="text-right num-val">44.5</td>
+                <td class="text-right num-val">42.7</td>
+              </tr>
+              <tr>
+                <td class="text-left border-right">SpatialM-Tiny</td>
+                <td class="text-right num-val">17.9</td>
+                <td class="text-right num-val">28.4</td>
+                <td class="text-right num-val border-right">10.5</td>
+                <td class="text-right num-val">44.9</td>
+                <td class="text-right num-val">50.4</td>
+                <td class="text-right num-val">31.4</td>
+                <td class="text-right num-val">35.3</td>
+              </tr>
+              <tr>
+                <td class="text-left border-right">SpatialM-Small</td>
+                <td class="text-right num-val">19.4</td>
+                <td class="text-right num-val">33.9</td>
+                <td class="text-right num-val border-right">14.5</td>
+                <td class="text-right num-val">42.9</td>
+                <td class="text-right num-val">48.0</td>
+                <td class="text-right num-val">30.8</td>
+                <td class="text-right num-val">29.6</td>
+              </tr>
+              <tr class="bottom-rule">
+                <td class="text-left border-right">SpatialM-Base</td>
+                <td class="text-right num-val">26.6</td>
+                <td class="text-right num-val">50.8</td>
+                <td class="text-right num-val border-right">24.2</td>
+                <td class="text-right num-val">43.9</td>
+                <td class="text-right num-val">49.5</td>
+                <td class="text-right num-val">29.9</td>
+                <td class="text-right num-val">32.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3>Decisions</h3>
         <ul>
-          <li><span class="ph">Literature review on how boundary detection and refinement have been used in the published models and also identifying potential improvements for our approach.</span></li>
+          <li>Literature review on how boundary detection and refinement have been used in the published models and also
+            identifying potential improvements for our approach.</li>
         </ul>
 
-
         <h2>Next Week</h2>
-        <p style="font:12px 'Courier New', Courier, monospace;">Week 7- Annotation I</p>
-        <p><span class="ph">producing binary change maps for selected images.</span></p>
-       
-        <div class="week-nav">← <a href="week05.html">Week 5</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week07.html">Week 7</a> →</div>
+        <p style="font:12px 'Courier New', Courier, monospace;">Week 7 — Annotation I</p>
+        <p>producing binary change maps for selected images.</p>
+
+        <div class="week-nav">← <a href="week05.html">Week 5</a> &nbsp;·&nbsp; <a href="../index.html">Home</a>
+          &nbsp;·&nbsp; <a href="week07.html">Week 7</a> →</div>
       </div>
     </div>
 
     <div id="footer">
       Change Detection Using Satellite Images for Remote Sensing<br>
       E/21/139 · E/21/291 · E/21/345 · University of Peradeniya<br>
-      Last updated: <span class="ph">02/06/2026 </span>
+      Last updated: 06/06/2026
     </div>
   </div>
 </body>
+
 </html>

@@ -231,6 +231,103 @@ figcaption {
   line-height: 2.2;
 }
 
+/* Benchmark and Academic Tables */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.academic-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  margin: 8px 0;
+  color: #1A1A1A;
+}
+
+.academic-table th {
+  background: none;
+  border: none;
+  font: bold 12px "Courier New", monospace;
+  color: #333;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.academic-table td {
+  border: none;
+  padding: 6px 10px;
+  vertical-align: middle;
+  font-size: 13px;
+}
+
+/* Booktabs horizontal rules */
+.academic-table tr.top-rule th,
+.academic-table tr.top-rule td {
+  border-top: 2px solid #1A1A1A;
+}
+
+.academic-table tr.mid-rule th,
+.academic-table tr.mid-rule td {
+  border-bottom: 1px solid #1A1A1A;
+}
+
+.academic-table tr.bottom-rule td {
+  border-bottom: 2px solid #1A1A1A;
+}
+
+.academic-table tr.group-sep td {
+  border-bottom: 1px solid #D4D0C8;
+}
+
+/* Colspan header sub-borders */
+.academic-table th.col-header-group {
+  border-bottom: 1px solid #1A1A1A;
+}
+
+/* Alignment utilities */
+.academic-table .text-left { text-align: left; }
+.academic-table .text-center { text-align: center; }
+.academic-table .text-right { text-align: right; }
+.academic-table .num-val { font-family: "Courier New", Courier, monospace; font-size: 12.5px; }
+
+/* Rank highlights matching website's brand colors */
+.academic-table .rank-1 { color: #C0392B; font-weight: bold; }
+.academic-table .rank-2 { color: #1B3A6B; font-weight: bold; }
+.academic-table .rank-3 { color: #2A6A3A; font-weight: bold; }
+
+.academic-table .border-right { border-right: 1px solid #C8C4BB; }
+
+/* Captions and notes */
+.academic-table-caption {
+  font: bold 12px "Courier New", Courier, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 4px;
+  color: #1A1A1A;
+}
+
+.academic-table-title {
+  font: italic 13px Georgia, serif;
+  text-align: center;
+  margin-bottom: 12px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.academic-table-note {
+  font: italic 11px Georgia, serif;
+  color: #5A5A5A;
+  margin-top: 6px;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
 /* ── Tablet and Mobile: sidebar off-canvas ── */
 @media (max-width: 899px) {
 

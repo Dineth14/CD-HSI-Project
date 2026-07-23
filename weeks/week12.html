@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="../style.css">
   <script src="../nav.js" defer></script>
 </head>
+
 <body>
   <div id="shell">
     <div id="header">
@@ -36,8 +38,8 @@
         <a href="week09.html"><span class="sq sq-done"></span>W09&nbsp; CD Model Design</a>
         <a href="week10.html"><span class="sq sq-done"></span>W10&nbsp; Refinement Module</a>
         <a href="week11.html"><span class="sq sq-done"></span>W11&nbsp; Decoder &amp; Loss</a>
-        <a href="week12.html"><span class="sq sq-active"></span>W12&nbsp; Training</a>
-        <a href="week13.html"><span class="sq sq-proposed"></span>W13&nbsp; Evaluation</a>
+        <a href="week12.html"><span class="sq sq-done"></span>W12&nbsp; Training</a>
+        <a href="week13.html"><span class="sq sq-active"></span>W13&nbsp; Evaluation</a>
         <a href="week14.html"><span class="sq sq-proposed"></span>W14&nbsp; Documentation</a>
         <hr class="sb-rule">
         <span class="sb-label">LINKS</span>
@@ -47,32 +49,243 @@
 
       <div id="content">
         <h1>Week 12 — Training on Benchmark Change Detection Datasets</h1>
-        <div class="meta-line">Status: <span class="s-proposed">Proposed</span></div>
-        <div class="week-nav">← <a href="week11.html">Week 11</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week13.html">Week 13</a> →</div>
+        <div class="meta-line">Status: <span class="s-done">Completed</span> · Dates: 12/07/2026 – 18/07/2026</div>
+        <div class="week-nav">← <a href="week11.html">Week 11</a> &nbsp;·&nbsp; <a href="../index.html">Home</a>
+          &nbsp;·&nbsp; <a href="week13.html">Week 13</a> →</div>
 
         <hr class="section-rule">
 
-        <h2>Proposed Work</h2>
-        <p>This week has not started yet. The following outlines what is planned based on the project schedule.</p>
-        <!-- Edit these proposed tasks when planning for this week changes. -->
+        <h2>Planned Work</h2>
         <ul>
-          <li><span class="ph">[Proposed task for this week]</span></li>
-          <li><span class="ph">[Proposed task for this week]</span></li>
-          <li><span class="ph">[Proposed task for this week]</span></li>
+          <li>Train the proposed change detection architecture on the DSIFN-CD and WHU-CD benchmark datasets.</li>
+          <li>Evaluate model predictions against ground truth using F1 score, mIoU, Overall Accuracy (OA), Recall,
+            Precision, and Boundary F1 (BF1).</li>
+          <li>Compare our model's performance against the top 5 state-of-the-art benchmark models for each dataset.</li>
         </ul>
-        <!--
-          When this week begins, replace this entire page with the
-          full progress template (Blocks 1-7). See HOWTO.md for instructions.
-        -->
-        <div class="week-nav">← <a href="week11.html">Week 11</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week13.html">Week 13</a> →</div>
+
+        <h2>Completed Work</h2>
+        <ul>
+          <li>Validated detection quality across complex multi-scale land-cover changes and fine object boundaries.</li>
+          <li>Compiled quantitative comparative analysis against the top 5 performing methods on DSIFN-CD and WHU-CD.
+          </li>
+        </ul>
+
+        <h2>Benchmark Performance Comparison</h2>
+
+        <h3>1. DSIFN-CD Benchmark Evaluation</h3>
+        <p>
+          The table below compares our proposed model against the top 5 performing models on the DSIFN-CD dataset:
+        </p>
+
+        <div class="table-container">
+          <div class="academic-table-caption">TABLE I</div>
+          <div class="academic-table-title">Performance Comparison on DSIFN-CD Dataset (Top 5 Baselines vs. Our Model)
+          </div>
+          <table class="academic-table">
+            <thead>
+              <tr class="top-rule">
+                <th class="text-center" style="width: 50px;">Rank</th>
+                <th class="text-left">Model</th>
+                <th class="text-left">Backbone</th>
+                <th class="text-right">F1</th>
+                <th class="text-right">mIoU</th>
+                <th class="text-right">OA</th>
+                <th class="text-right">Recall</th>
+                <th class="text-right">Precision</th>
+                <th class="text-right">BF1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mid-rule">
+                <td class="text-center num-val rank-1">Ours</td>
+                <td class="text-left rank-1">Proposed Model</td>
+                <td class="text-left">VMamba-small</td>
+                <td class="text-right num-val rank-1">0.7127</td>
+                <td class="text-right num-val rank-1">0.7223</td>
+                <td class="text-right num-val rank-1">0.9039</td>
+                <td class="text-right num-val">0.7012</td>
+                <td class="text-right num-val rank-2">0.7245</td>
+                <td class="text-right num-val rank-1">0.3705</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">1</td>
+                <td class="text-left">BIT-CD</td>
+                <td class="text-left">ResNet-18</td>
+                <td class="text-right num-val rank-2">0.6732</td>
+                <td class="text-right num-val rank-2">0.6929</td>
+                <td class="text-right num-val rank-2">0.8919</td>
+                <td class="text-right num-val">0.6552</td>
+                <td class="text-right num-val">0.6923</td>
+                <td class="text-right num-val">0.2819</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">2</td>
+                <td class="text-left">SChanger</td>
+                <td class="text-left">—</td>
+                <td class="text-right num-val rank-3">0.6629</td>
+                <td class="text-right num-val rank-3">0.6835</td>
+                <td class="text-right num-val">0.8857</td>
+                <td class="text-right num-val">0.6612</td>
+                <td class="text-right num-val">0.6647</td>
+                <td class="text-right num-val rank-3">0.2847</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">3</td>
+                <td class="text-left">ChangeMamba</td>
+                <td class="text-left">VMamba-tiny</td>
+                <td class="text-right num-val">0.6435</td>
+                <td class="text-right num-val">0.6729</td>
+                <td class="text-right num-val">0.8849</td>
+                <td class="text-right num-val">0.6113</td>
+                <td class="text-right num-val">0.6792</td>
+                <td class="text-right num-val">0.1903</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">4</td>
+                <td class="text-left">CGNet</td>
+                <td class="text-left">—</td>
+                <td class="text-right num-val">0.6204</td>
+                <td class="text-right num-val">0.6290</td>
+                <td class="text-right num-val">0.8343</td>
+                <td class="text-right num-val rank-1">0.7970</td>
+                <td class="text-right num-val">0.5079</td>
+                <td class="text-right num-val rank-2">0.2903</td>
+              </tr>
+              <tr class="bottom-rule">
+                <td class="text-center num-val">5</td>
+                <td class="text-left">FC-EF</td>
+                <td class="text-left">—</td>
+                <td class="text-right num-val">0.6078</td>
+                <td class="text-right num-val">0.6400</td>
+                <td class="text-right num-val">0.8604</td>
+                <td class="text-right num-val">0.6365</td>
+                <td class="text-right num-val">0.5816</td>
+                <td class="text-right num-val">0.1955</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2. WHU-CD Benchmark Evaluation</h3>
+        <p>
+          The table below compares our proposed model against the top 5 performing models on the WHU-CD dataset:
+        </p>
+
+        <div class="table-container">
+          <div class="academic-table-caption">TABLE II</div>
+          <div class="academic-table-title">Performance Comparison on WHU-CD Dataset (Top 5 Baselines vs. Our Model)
+          </div>
+          <table class="academic-table">
+            <thead>
+              <tr class="top-rule">
+                <th class="text-center" style="width: 50px;">Rank</th>
+                <th class="text-left">Model</th>
+                <th class="text-left">Backbone</th>
+                <th class="text-right">F1</th>
+                <th class="text-right">mIoU</th>
+                <th class="text-right">OA</th>
+                <th class="text-right">Recall</th>
+                <th class="text-right">Precision</th>
+                <th class="text-right">BF1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mid-rule">
+                <td class="text-center num-val rank-1">Ours</td>
+                <td class="text-left rank-1">Proposed Model</td>
+                <td class="text-left">VMamba-base</td>
+                <td class="text-right num-val rank-1">0.9617</td>
+                <td class="text-right num-val rank-1">0.9612</td>
+                <td class="text-right num-val rank-1">0.9963</td>
+                <td class="text-right num-val rank-1">0.9573</td>
+                <td class="text-right num-val rank-1">0.9662</td>
+                <td class="text-right num-val rank-1">0.9321</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">1</td>
+                <td class="text-left">ChangeMamba</td>
+                <td class="text-left">VMamba-tiny</td>
+                <td class="text-right num-val rank-2">0.9521</td>
+                <td class="text-right num-val rank-2">0.9519</td>
+                <td class="text-right num-val rank-2">0.9954</td>
+                <td class="text-right num-val rank-2">0.9401</td>
+                <td class="text-right num-val rank-2">0.9644</td>
+                <td class="text-right num-val rank-2">0.8605</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">2</td>
+                <td class="text-left">CGNet</td>
+                <td class="text-left">—</td>
+                <td class="text-right num-val rank-3">0.9331</td>
+                <td class="text-right num-val rank-3">0.9340</td>
+                <td class="text-right num-val rank-3">0.9936</td>
+                <td class="text-right num-val">0.9299</td>
+                <td class="text-right num-val">0.9364</td>
+                <td class="text-right num-val rank-3">0.8138</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">3</td>
+                <td class="text-left">BIT-CD</td>
+                <td class="text-left">ResNet-18</td>
+                <td class="text-right num-val">0.8940</td>
+                <td class="text-right num-val">0.8989</td>
+                <td class="text-right num-val">0.9899</td>
+                <td class="text-right num-val">0.8845</td>
+                <td class="text-right num-val">0.9037</td>
+                <td class="text-right num-val">0.6879</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">4</td>
+                <td class="text-left">DSAMNet</td>
+                <td class="text-left">—</td>
+                <td class="text-right num-val">0.8905</td>
+                <td class="text-right num-val">0.8956</td>
+                <td class="text-right num-val">0.9891</td>
+                <td class="text-right num-val">0.9167</td>
+                <td class="text-right num-val">0.8657</td>
+                <td class="text-right num-val">0.5855</td>
+              </tr>
+              <tr class="bottom-rule">
+                <td class="text-center num-val">5</td>
+                <td class="text-left">IFNet</td>
+                <td class="text-left">—</td>
+                <td class="text-right num-val">0.8389</td>
+                <td class="text-right num-val">0.8534</td>
+                <td class="text-right num-val">0.9849</td>
+                <td class="text-right num-val">0.8147</td>
+                <td class="text-right num-val">0.8644</td>
+                <td class="text-right num-val">0.3245</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Key Findings</h2>
+        <ul>
+          <li><strong>Outperformance on DSIFN-CD</strong>: Our proposed model achieves <strong>0.7127 F1</strong> and
+            <strong>0.7223 mIoU</strong>, surpassing the previous top-performing model (BIT-CD with 0.6732 F1) by +3.95%
+            in F1 score and +31.4% in Boundary F1 (BF1: 0.3705 vs 0.2819).</li>
+          <li><strong>State-of-the-Art on WHU-CD</strong>: On the WHU-CD benchmark, our VMamba-base model sets a new
+            benchmark high with <strong>0.9617 F1</strong>, <strong>0.9612 mIoU</strong>, <strong>0.9963 OA</strong>,
+            and <strong>0.9321 BF1</strong>, exceeding ChangeMamba (0.9521 F1, 0.8605 BF1).</li>
+        </ul>
+
+        <h2>Next Week</h2>
+        <p style="font:12px 'Courier New', Courier, monospace;">Week 13 — Evaluation, Ablation, and Model Comparison</p>
+        <p>Conducting comprehensive evaluations, boundary accuracy analysis, and cross-dataset generalizability studies.
+        </p>
+
+        <div class="week-nav">← <a href="week11.html">Week 11</a> &nbsp;·&nbsp; <a href="../index.html">Home</a>
+          &nbsp;·&nbsp; <a href="week13.html">Week 13</a> →</div>
       </div>
     </div>
 
     <div id="footer">
       Change Detection Using Satellite Images for Remote Sensing<br>
       E/21/139 · E/21/291 · E/21/345 · University of Peradeniya<br>
-      Last updated: 01/07/2026
+      Last updated: 24/07/2026
     </div>
   </div>
 </body>
+
 </html>

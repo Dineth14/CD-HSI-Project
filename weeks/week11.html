@@ -34,9 +34,9 @@
         <a href="week07.html"><span class="sq sq-done"></span>W07&nbsp; Annotation I</a>
         <a href="week08.html"><span class="sq sq-done"></span>W08&nbsp; Mid-Review</a>
         <a href="week09.html"><span class="sq sq-done"></span>W09&nbsp; CD Model Design</a>
-        <a href="week10.html"><span class="sq sq-active"></span>W10&nbsp; Refinement Module</a>
-        <a href="week11.html"><span class="sq sq-proposed"></span>W11&nbsp; Decoder &amp; Loss</a>
-        <a href="week12.html"><span class="sq sq-proposed"></span>W12&nbsp; Training</a>
+        <a href="week10.html"><span class="sq sq-done"></span>W10&nbsp; Refinement Module</a>
+        <a href="week11.html"><span class="sq sq-done"></span>W11&nbsp; Decoder &amp; Loss</a>
+        <a href="week12.html"><span class="sq sq-active"></span>W12&nbsp; Training</a>
         <a href="week13.html"><span class="sq sq-proposed"></span>W13&nbsp; Evaluation</a>
         <a href="week14.html"><span class="sq sq-proposed"></span>W14&nbsp; Documentation</a>
         <hr class="sb-rule">
@@ -47,23 +47,155 @@
 
       <div id="content">
         <h1>Week 11 — Decoder, Refinement Head, and Loss Design</h1>
-        <div class="meta-line">Status: <span class="s-proposed">Proposed</span></div>
+        <div class="meta-line">Status: <span class="s-done">Completed</span> · Dates: 05/07/2026 – 11/07/2026</div>
         <div class="week-nav">← <a href="week10.html">Week 10</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week12.html">Week 12</a> →</div>
 
         <hr class="section-rule">
 
-        <h2>Proposed Work</h2>
-        <p>This week has not started yet. The following outlines what is planned based on the project schedule.</p>
-        <!-- Edit these proposed tasks when planning for this week changes. -->
+        <h2>Planned Work</h2>
         <ul>
-          <li><span class="ph">[Proposed task for this week]</span></li>
-          <li><span class="ph">[Proposed task for this week]</span></li>
-          <li><span class="ph">[Proposed task for this week]</span></li>
+          <li>Design the Adaptive Receptive-Field (ARF-FPN) Decoder for multi-scale region feature fusion.</li>
+          <li>Implement the Bounded Boundary Residual Refinement head to refine coarse change logit predictions.</li>
+          <li>Formulate the multi-task joint loss function combining BCE, Dice, coarse, and Sobel-edge boundary supervision.</li>
+          <li>Evaluate model variants (A3, A4, A5) on benchmark datasets to quantify incremental performance gains.</li>
         </ul>
-        <!--
-          When this week begins, replace this entire page with the
-          full progress template (Blocks 1-7). See HOWTO.md for instructions.
-        -->
+
+        <h2>Completed Work</h2>
+
+        <h3>E. Adaptive Receptive-Field Decoder</h3>
+        <p>
+          The decoder operates on the CRAM-lite refined region stream. Since CRAM-lite is applied only to the first three scales, we set <i>R</i><sub>4</sub> = <i>R</i><sub>4</sub>. The decoder input is {<i>R</i><sub>&ell;</sub>}<sub>&ell;=1</sub><sup>4</sup>. Each scale is processed by an adaptive receptive-field block with parallel dilated depthwise convolutions:
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #F2F0EB; padding: 10px 16px; margin: 14px 0; border-left: 3px solid #1B3A6B; font-family: Georgia, serif;">
+          <span><i>d</i> &in; {1, 2, 4, 8}</span>
+          <span style="font-family: 'Courier New', monospace; color: #5A5A5A;">(8)</span>
+        </div>
+
+        <p>
+          These branches give the decoder both local detail and wider spatial context. The multi-scale ARF-FPN block fuses the four region features in a top-down manner, and the coarse prediction head produces:
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #F2F0EB; padding: 10px 16px; margin: 14px 0; border-left: 3px solid #1B3A6B; font-family: Georgia, serif;">
+          <span><i>P</i><sub>c</sub> = <i>h</i><sub>coarse</sub><sup>ARF-FPN</sup>({<i>R</i><sub>&ell;</sub>}<sub>&ell;=1</sub><sup>4</sup>)</span>
+          <span style="font-family: 'Courier New', monospace; color: #5A5A5A;">(9)</span>
+        </div>
+
+        <p>
+          where <i>P</i><sub>c</sub> is the coarse change logit map. This map is the region-level prediction before boundary correction.
+        </p>
+
+        <h3>F. Bounded Boundary Residual Refinement</h3>
+        <p>
+          The refinement branch uses the selected finest-scale boundary feature <i>B</i><sub>1</sub>, the coarse logit <i>P</i><sub>c</sub>, and an edge cue from the coarse prediction:
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #F2F0EB; padding: 10px 16px; margin: 14px 0; border-left: 3px solid #1B3A6B; font-family: Georgia, serif;">
+          <span><i>E</i><sub>c</sub> = Sobel(&sigma;(<i>P</i><sub>c</sub>))</span>
+          <span style="font-family: 'Courier New', monospace; color: #5A5A5A;">(10)</span>
+        </div>
+
+        <p>
+          In the refinement block, <i>E</i><sub>c</sub> is the Sobel block applied to the coarse logits after sigmoid. The boundary aggregation block concatenates the boundary feature, coarse logit, and coarse edge cue:
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #F2F0EB; padding: 10px 16px; margin: 14px 0; border-left: 3px solid #1B3A6B; font-family: Georgia, serif;">
+          <span>&Delta;<i>P</i> = <i>h</i><sub>ref</sub>([<i>B</i><sub>1</sub>, <i>P</i><sub>c</sub>, <i>E</i><sub>c</sub>])</span>
+          <span style="font-family: 'Courier New', monospace; color: #5A5A5A;">(11)</span>
+        </div>
+
+        <p>
+          The refinement head predicts a residual correction rather than a new mask. The final logit is:
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #F2F0EB; padding: 10px 16px; margin: 14px 0; border-left: 3px solid #1B3A6B; font-family: Georgia, serif;">
+          <span><i>P</i><sub>f</sub> = <i>P</i><sub>c</sub> + 0.1 &middot; tanh(&Delta;<i>P</i>)</span>
+          <span style="font-family: 'Courier New', monospace; color: #5A5A5A;">(12)</span>
+        </div>
+
+        <p>
+          The <code>tanh</code> bounds the residual and the scale factor keeps the update small, so boundary evidence refines the coarse prediction without overwriting it. The final probability map is:
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #F2F0EB; padding: 10px 16px; margin: 14px 0; border-left: 3px solid #1B3A6B; font-family: Georgia, serif;">
+          <span><i>Ŷ</i> = &sigma;(<i>P</i><sub>f</sub>)</span>
+          <span style="font-family: 'Courier New', monospace; color: #5A5A5A;">(13)</span>
+        </div>
+
+        <p>
+          which is thresholded to obtain the binary change map.
+        </p>
+
+        <h3>G. Training Objective</h3>
+        <p>
+          The full model is trained with final, coarse, and boundary supervision:
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #F2F0EB; padding: 10px 16px; margin: 14px 0; border-left: 3px solid #1B3A6B; font-family: Georgia, serif;">
+          <span><i>L</i> = <i>L</i><sub>BCE</sub> + <i>L</i><sub>Dice</sub> + 0.4 <i>L</i><sub>coarse</sub> + 0.1 <i>L</i><sub>boundary</sub></span>
+          <span style="font-family: 'Courier New', monospace; color: #5A5A5A;">(14)</span>
+        </div>
+
+        <p>
+          BCE and Dice supervise the final prediction <i>P</i><sub>f</sub>, while the coarse loss supervises <i>P</i><sub>c</sub> to stabilize the region decoder. The boundary term applies a Sobel-edge &ell;<sub>1</sub> loss to encourage contour consistency. The auxiliary weights keep the main BCE and Dice objective dominant, and ablations without full supervision disable the coarse and boundary losses.
+        </p>
+
+        <h2>Results</h2>
+        <p>
+          The following table presents quantitative ablation results across model architecture variants:
+        </p>
+
+        <div class="table-container">
+          <div class="academic-table-caption">TABLE I</div>
+          <div class="academic-table-title">Performance Comparison of Model Variants</div>
+          <table class="academic-table">
+            <thead>
+              <tr class="top-rule">
+                <th class="text-center" style="width: 60px;">ID</th>
+                <th class="text-left">Variant</th>
+                <th class="text-left">Main Added Component</th>
+                <th class="text-right">Params (M)</th>
+                <th class="text-right">F1 (%)</th>
+                <th class="text-right">IoU (%)</th>
+                <th class="text-right">OA (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mid-rule">
+                <td class="text-center num-val">A3</td>
+                <td class="text-left">+SignedDiff</td>
+                <td class="text-left">Signed temporal stream</td>
+                <td class="text-right num-val">55.34</td>
+                <td class="text-right num-val">94.28</td>
+                <td class="text-right num-val">89.19</td>
+                <td class="text-right num-val">95.99</td>
+              </tr>
+              <tr>
+                <td class="text-center num-val">A4</td>
+                <td class="text-left">+ARF-FPN</td>
+                <td class="text-left">Adaptive RF decoder</td>
+                <td class="text-right num-val">65.12</td>
+                <td class="text-right num-val rank-1">94.36</td>
+                <td class="text-right num-val rank-1">89.32</td>
+                <td class="text-right num-val rank-1">96.05</td>
+              </tr>
+              <tr class="bottom-rule">
+                <td class="text-center num-val">A5</td>
+                <td class="text-left">+BoundaryResidual</td>
+                <td class="text-left">Bounded residual head</td>
+                <td class="text-right num-val">65.19</td>
+                <td class="text-right num-val">93.59</td>
+                <td class="text-right num-val">87.94</td>
+                <td class="text-right num-val">95.53</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Next Week</h2>
+        <p style="font:12px 'Courier New', Courier, monospace;">Week 12 — Training</p>
+        <p>Training and evaluating the change detection model architecture across benchmark datasets.</p>
+
         <div class="week-nav">← <a href="week10.html">Week 10</a> &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="week12.html">Week 12</a> →</div>
       </div>
     </div>
@@ -71,7 +203,7 @@
     <div id="footer">
       Change Detection Using Satellite Images for Remote Sensing<br>
       E/21/139 · E/21/291 · E/21/345 · University of Peradeniya<br>
-      Last updated: 01/07/2026
+      Last updated: 24/07/2026
     </div>
   </div>
 </body>
